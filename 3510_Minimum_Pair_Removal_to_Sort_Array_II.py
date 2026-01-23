@@ -1,49 +1,84 @@
 import heapq
+from typing import List
 
 class Solution:
-    def minimumPairRemoval(self, nums):
+    def minimumPairRemoval(self, nums: List[int]) -> int:
         n = len(nums)
         if n <= 1:
             return 0
-
-        prev = list(range(-1, n - 1))
-        next = list(range(1, n + 1))
-        alive = [True] * n
-
+        
+        is_sorted = all(nums[i] >= nums[i-1] for i in range(1, n))
+        if is_sorted:
+            return 0
+        
+        next_idx = {i: i+1 for i in range(n-1)}
+        next_idx[n-1] = None
+        prev_idx = {i: i-1 for i in range(1, n)}
+        prev_idx[0] = None
+        
+        values = {i: nums[i] for i in range(n)}
+        
         heap = []
         for i in range(n - 1):
-            heapq.heappush(heap, (nums[i] + nums[i + 1], i))
-
-        def is_sorted():
-            i = 0
-            while next[i] < n:
-                if nums[i] > nums[next[i]]:
-                    return False
-                i = next[i]
-            return True
-
-        ops = 0
-
-        while not is_sorted():
-            s, i = heapq.heappop(heap)
-
-            if not alive[i] or next[i] >= n or not alive[next[i]]:
-                continue
-
-            j = next[i]
-            nums[i] += nums[j]
-            alive[j] = False
-
-            nxt = next[j]
-            next[i] = nxt
-            if nxt < n:
-                prev[nxt] = i
-
-            if prev[i] >= 0:
-                heapq.heappush(heap, (nums[prev[i]] + nums[i], prev[i]))
-            if nxt < n:
-                heapq.heappush(heap, (nums[i] + nums[nxt], i))
-
-            ops += 1
-
-        return ops
+            heapq.heappush(heap, (nums[i] + nums[i+1], i, nums[i], nums[i+1]))
+        
+        operations = 0
+        
+        violations = set()
+        for i in range(n-1):
+            if nums[i] > nums[i+1]:
+                violations.add(i)
+        
+        while violations:
+            while heap:
+                total, left, left_val, right_val = heapq.heappop(heap)
+                right = next_idx.get(left)
+                
+                if right is not None and left in values and right in values:
+                    if values[left] == left_val and values[right] == right_val:
+                        break
+            else:
+                break
+            
+            operations += 1
+            merged_value = values[left] + values[right]
+            
+            prev = prev_idx.get(left)
+            next_next = next_idx.get(right)
+            
+            if left in violations:
+                violations.discard(left)
+            if prev is not None and prev in violations:
+                violations.discard(prev)
+            if right in violations:
+                violations.discard(right)
+            
+            del values[right]
+            values[left] = merged_value
+            
+            next_idx[left] = next_next
+            if next_next is not None:
+                prev_idx[next_next] = left
+            
+            if prev is not None and values[prev] > merged_value:
+                violations.add(prev)
+            if next_next is not None and merged_value > values[next_next]:
+                violations.add(left)
+            
+            if prev is not None:
+                heapq.heappush(heap, (
+                    values[prev] + merged_value,
+                    prev,
+                    values[prev],
+                    merged_value
+                ))
+            
+            if next_next is not None:
+                heapq.heappush(heap, (
+                    merged_value + values[next_next],
+                    left,
+                    merged_value,
+                    values[next_next]
+                ))
+        
+        return operations
