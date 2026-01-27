@@ -3,34 +3,26 @@ import heapq
 class Solution:
     def minCost(self, n, edges):
         adj = [[] for _ in range(n)]
-        incoming = [[] for _ in range(n)]
 
         for u, v, w in edges:
             adj[u].append((v, w))
-            incoming[v].append((u, w))
+            adj[v].append((u, 2 * w))
 
         INF = 10**18
-        dist = [[INF, INF] for _ in range(n)]
-        dist[0][0] = 0
+        dist = [INF] * n
+        dist[0] = 0
 
-        pq = [(0, 0, 0)]
+        pq = [(0, 0)]
 
         while pq:
-            cost, u, used = heapq.heappop(pq)
-            if cost > dist[u][used]:
+            cost, u = heapq.heappop(pq)
+            if cost > dist[u]:
                 continue
 
             for v, w in adj[u]:
-                if cost + w < dist[v][used]:
-                    dist[v][used] = cost + w
-                    heapq.heappush(pq, (cost + w, v, used))
+                nc = cost + w
+                if nc < dist[v]:
+                    dist[v] = nc
+                    heapq.heappush(pq, (nc, v))
 
-            if used == 0:
-                for v, w in incoming[u]:
-                    nc = cost + 2 * w
-                    if nc < dist[v][1]:
-                        dist[v][1] = nc
-                        heapq.heappush(pq, (nc, v, 1))
-
-        ans = min(dist[n - 1][0], dist[n - 1][1])
-        return -1 if ans == INF else ans
+        return -1 if dist[n - 1] == INF else dist[n - 1]
