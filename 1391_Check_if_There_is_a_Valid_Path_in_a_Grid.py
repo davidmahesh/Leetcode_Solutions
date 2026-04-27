@@ -1,5 +1,4 @@
 from collections import deque
-
 class Solution:
     def hasValidPath(self, grid):
         m, n = len(grid), len(grid[0])
