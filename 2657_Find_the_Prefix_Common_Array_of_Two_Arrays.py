@@ -3,6 +3,7 @@ class Solution:
         seen_a, seen_b = set(), set()
         common = 0
         res = []
+        
         for a, b in zip(A, B):
             seen_a.add(a)
             seen_b.add(b)
