@@ -8,6 +8,7 @@ class Solution:
         res = 0
         for y in arr2:
             s = str(y)
+            
             for i in range(1, len(s)+1):
                 if s[:i] in seen:
                     res = max(res, i)
