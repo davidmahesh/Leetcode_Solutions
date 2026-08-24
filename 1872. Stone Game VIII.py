@@ -6,7 +6,6 @@ class Solution:
 
         for i in range(1, n):
             prefix[i] = prefix[i - 1] + stones[i]
-
         ans = prefix[n - 1]
 
         for i in range(n - 2, 0, -1):
