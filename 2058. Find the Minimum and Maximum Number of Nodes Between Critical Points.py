@@ -15,7 +15,6 @@ class Solution:
                     min_dist = min(min_dist, pos - last)
 
                 last = pos
-
             prev = curr
             curr = curr.next
             pos += 1
