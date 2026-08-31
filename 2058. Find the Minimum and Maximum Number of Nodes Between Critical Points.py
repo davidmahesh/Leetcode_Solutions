@@ -3,7 +3,6 @@ class Solution:
         prev = head
         curr = head.next
         pos = 1
-
         first = -1
         last = -1
         min_dist = float('inf')
