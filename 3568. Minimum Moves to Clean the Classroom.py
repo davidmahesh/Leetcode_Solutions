@@ -23,7 +23,6 @@ class Solution:
             mask |= 1 << litter[(sr, sc)]
         best[(sr, sc, mask)] = energy
         q.append((sr, sc, energy, mask, 0))
-
         while q:
             x, y, e, mask, dist = q.popleft()
 
