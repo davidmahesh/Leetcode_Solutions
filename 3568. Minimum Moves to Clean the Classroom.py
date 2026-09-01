@@ -1,5 +1,4 @@
 from collections import deque
-
 class Solution:
     def minMoves(self, classroom, energy):
         m = len(classroom)
