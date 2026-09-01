@@ -3,32 +3,24 @@ class Solution:
     def minMoves(self, classroom, energy):
         m = len(classroom)
         n = len(classroom[0])
-
         start = None
         litter = {}
-
         for i in range(m):
             for j in range(n):
                 if classroom[i][j] == 'S':
                     start = (i, j)
                 elif classroom[i][j] == 'L':
                     litter[(i, j)] = len(litter)
-
         k = len(litter)
-
         if k == 0:
             return 0
-
         full = (1 << k) - 1
         sr, sc = start
-
         best = {}
         q = deque()
-
         mask = 0
         if (sr, sc) in litter:
             mask |= 1 << litter[(sr, sc)]
-
         best[(sr, sc, mask)] = energy
         q.append((sr, sc, energy, mask, 0))
 
@@ -50,7 +42,6 @@ class Solution:
 
                 if e == 0:
                     continue
-
                 ne = e - 1
 
                 if classroom[nx][ny] == 'R':
