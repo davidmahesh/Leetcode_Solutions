@@ -4,7 +4,6 @@ class Solution:
         possible = {nums1[0] % 2}
         seen = [False, False]
         seen[nums1[0] % 2] = True
-
         for x in nums1[1:]:
             options = {x % 2}
             for p in range(2):
