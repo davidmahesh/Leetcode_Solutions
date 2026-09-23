@@ -5,7 +5,6 @@ class Solution:
             return -1
         if target == 0:
             return len(nums)
-
         left = 0
         total = 0
         longest = -1
