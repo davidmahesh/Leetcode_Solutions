@@ -8,7 +8,6 @@ class Solution:
         left = 0
         total = 0
         longest = -1
-
         for right in range(len(nums)):
             total += nums[right]
 
