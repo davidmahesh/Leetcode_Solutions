@@ -2,6 +2,7 @@ class Solution:
     def smallestIndex(self, nums):
         for i, x in enumerate(nums):
             s = 0
+            
             while x:
                 s += x % 10
                 x //= 10
