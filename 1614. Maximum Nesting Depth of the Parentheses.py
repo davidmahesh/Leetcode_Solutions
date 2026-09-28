@@ -8,5 +8,4 @@ class Solution:
                 ans = max(ans, depth)
             elif ch == ')':
                 depth -= 1
-
         return ans
