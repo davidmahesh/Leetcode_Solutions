@@ -8,5 +8,4 @@ class Solution:
             else:
                 x = stack.pop()
                 stack[-1] += max(2 * x, 1)
-
         return stack[0]
