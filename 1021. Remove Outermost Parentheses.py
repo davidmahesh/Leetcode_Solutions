@@ -1,5 +1,6 @@
 class Solution:
     def removeOuterParentheses(self, s):
+        
         ans = []
         depth = 0
         for ch in s:
