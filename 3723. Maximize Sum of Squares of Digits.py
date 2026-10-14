@@ -7,5 +7,4 @@ class Solution:
             d = min(9, sum)
             ans.append(str(d))
             sum -= d
-            
         return ''.join(ans)
