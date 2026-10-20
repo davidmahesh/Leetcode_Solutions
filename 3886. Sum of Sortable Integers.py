@@ -10,7 +10,6 @@ class Solution:
             if nums[i] > nums[i + 1]:
                 pref[i + 1] += 1
                 drop_idx[i + 1] = i
-                
         divs = []
         i = 1
         while i * i <= n:
