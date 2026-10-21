@@ -5,7 +5,6 @@ class Solution:
         n = len(s)
         if n == 2:
             return -1
-
         mn = min(s)
         mx = max(s)
 
