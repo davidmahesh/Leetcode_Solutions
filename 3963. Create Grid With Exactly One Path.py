@@ -4,7 +4,6 @@ class Solution:
 
         for j in range(n):
             grid[0][j] = '.'
-
         for i in range(m):
             grid[i][n - 1] = '.'
 
