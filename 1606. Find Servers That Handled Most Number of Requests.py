@@ -6,15 +6,12 @@ class Solution:
         available = SortedList(range(k))
         busy = []
         count = [0] * k
-
         for i, (start, duration) in enumerate(zip(arrival, load)):
             while busy and busy[0][0] <= start:
                 end, server = heapq.heappop(busy)
                 available.add(server)
-
             if not available:
                 continue
-
             idx = available.bisect_left(i % k)
             if idx == len(available):
                 idx = 0
